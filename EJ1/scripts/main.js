@@ -22,7 +22,7 @@ do {
                 alert("No válido");
                 wrong = true;
             } 
-        } while (!cancel && wrong == true);
+        } while (!cancel && wrong);
 
         intentos++;
         // Si se ha introducido un número correctamente comprueba si es mayor o menor; en caso de ser igual terminará el bucle.
