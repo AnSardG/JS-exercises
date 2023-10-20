@@ -40,9 +40,10 @@ do {
     if (!cancel) {
         alert("¡Acertaste! Intentos: " + intentos);
     }
+    // Con el método "confirm()" se volverá a preguntar para repetir el juego.
 } while (!cancel && confirm("¿jugar?"));
 
-// Cuando termine la ejecución del programa se creará un elemento h1 dependiendo del resultado.
+// Cuando termine la ejecución del programa se creará un elemento h1 dependiendo de si ha cancelado, o no quiere jugar más.
 if (cancel) {
     document.write("<h1>Cancelado</h1>");
 }
