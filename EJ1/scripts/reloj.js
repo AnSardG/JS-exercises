@@ -1,7 +1,7 @@
 window.setInterval(()=> {    
     const reloj = document.getElementById("reloj");
     reloj.textContent = `Hora: ${formDate()}`;
-}, 1000);
+}, 500);
 
 function formDate(){
     const date = new Date();
