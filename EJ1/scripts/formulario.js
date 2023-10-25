@@ -9,7 +9,6 @@ btn.addEventListener("click", (ev) => {
     } else {
         res.textContent = "Erróneo.";
     }
-
 });
 
 function checkNumber(number) {
