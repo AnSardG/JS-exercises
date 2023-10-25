@@ -41,7 +41,7 @@ Profesor.prototype.asignar = function(){
 
 let persona1 = new Persona("Juan", 30, "Masculino");
 let estudiante1 = new Estudiante("Pepe", 20, "masculino", 3, "B");
-let profesor1 = new Profesor("Julia", 40, "feminino", "Historia del arte", "Avanzado");
+let profesor1 = new Profesor("Julia", 40, "femenino", "Historia del arte", "Avanzado");
 
 persona1.obtDetalles();
 estudiante1.registrar();
