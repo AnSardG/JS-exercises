@@ -11,28 +11,30 @@ Persona.prototype.obtDetalles = function () {
 }
 
 function Estudiante(nombre, edad, genero, curso, grupo){
-    //Heredamos prototipo Persona
-    Persona.call(this, nombre, edad, genero);
+    this.base = Persona;
+    this.base(nombre, edad, genero);
 
     this.curso = curso || 0;
     this.grupo = grupo || "";    
 }
 
 // Así establecemos la herencia del prototipo Persona a Estudiante
-Estudiante.prototype = Object.create(Persona.prototype);
+// Estudiante.prototype = Object.create(Persona.prototype)
+Estudiante.prototype = new Persona;
 
 Estudiante.prototype.registrar = function(){
     console.log(this.nombre + " del curso " + this.curso + this.grupo + " se ha registrado.");
 }
 
 function Profesor(nombre, edad, genero, asignatura, nivel){
-    Persona.call(this, nombre, edad, genero);
+    this.base = Persona;
+    this.base(nombre, edad, genero);
 
     this.asignatura = asignatura || "";
     this.nivel = nivel || "";
 }
 
-Profesor.prototype = Object.create(Persona.prototype);
+Profesor.prototype = new Persona;
 
 Profesor.prototype.asignar = function(){
     console.log(this.nombre + " de la asignatura " + this.asignatura 
