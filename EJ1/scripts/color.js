@@ -6,6 +6,6 @@
 let box = Array.from(document.getElementsByClassName("col-sm mr-5 h-100 d-inline-block text-white"));
 box.forEach(element => {
     element.addEventListener("mouseover", (event) => {
-        document.body.style.backgroundColor = element.style.backgroundColor;
+        document.body.style.backgroundColor = event.target.style.backgroundColor;
     })
 });
