@@ -86,3 +86,20 @@ console.log("Se acabó!!")
  * Se acabó!!
  * Ok
  */
+
+// Fragmento 6
+console.log("Comenzamos...")
+Promise.resolve("Orden uno").then((respuesta) => {
+console.log(respuesta)
+})
+Promise.resolve("Orden dos").then((respuesta) => {
+console.log(respuesta)
+})
+console.log("Se acabó!!")
+
+/**
+ * Comenzamos..
+ * Se acabó!!
+ * Orden uno
+ * Orden dos
+ */
