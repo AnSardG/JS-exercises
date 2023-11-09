@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Conversor de Divisas</h1>
+
+    <form id="currencyConverterForm">
+        <label for="amount">Cantidad:</label>
+        <input type="number" id="amount" required>
+
+        <label for="fromCurrency">De:</label>
+        <select id="fromCurrency" required>
+            <option value="EUR">Euro</option>
+            <option value="USD">Dólar USA</option>
+            <option value="GBP">Libra Esterlina</option>
+            <option value="JPY">Yen Japonés</option>
+            <option value="CNY">Yuan Chino</option>
+            <option value="CHF">Franco Suizo</option>
+        </select>
+
+        <label for="toCurrency">A:</label>
+        <select id="toCurrency" required>
+            <option value="EUR">Euro</option>
+            <option value="USD">Dólar USA</option>
+            <option value="GBP">Libra Esterlina</option>
+            <option value="JPY">Yen Japonés</option>
+            <option value="CNY">Yuan Chino</option>
+            <option value="CHF">Franco Suizo</option>
+        </select>
+
+        <button type="button" id="btn">Convertir</button>
+    </form>
+
+    <div id="result"></div>
+
+    <script src="../scripts/cambio_moneda.js"></script>
+</body>
+</html>
