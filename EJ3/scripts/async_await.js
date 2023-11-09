@@ -1,19 +1,23 @@
 // Promesa, código ejecutor
-const promise = new Promise((resolve, reject) => {
-    if (Math.random() > 0.2) {
-        setTimeout(() => {
-            resolve("Ok. Los datos han llegado");
-        }, 2000);
-    } else {
-        reject("Error en la comunicación");
-    }
-});
+
+function getData() {
+    return new Promise((resolve, reject) => {
+        if (Math.random() > 0.2) {
+            setTimeout(() => {
+                resolve("Ok. Los datos han llegado");
+            }, 2000);
+        } else {
+            reject("Error en la comunicación");
+        }
+    });
+}
+
 
 // Función asíncrona, código consumidor.
-async function getData() {
+async function getDataAsync() {
     try {
         // Si no resuelve la promesa, se pasa al catch.
-        const mensaje = await promise;
+        const mensaje = await getData();
         console.log(mensaje);
     } catch (error) {
         console.log(error);
@@ -21,4 +25,4 @@ async function getData() {
 };
 
 // Llamada a función asíncrona.
-getData();
+getDataAsync();

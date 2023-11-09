@@ -21,7 +21,7 @@ getData(data => {
 */
 
 const promise = new Promise((resolve, reject) => {
-    if (Math.random() > 0.9) {
+    if (Math.random() > 0.2) {
         setTimeout(() => {
             resolve("Ok. Los datos han llegado");
         }, 2000);
