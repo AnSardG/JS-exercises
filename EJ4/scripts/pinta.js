@@ -3,8 +3,8 @@ const paleta = document.getElementById("paleta");
 const seleccionado = document.getElementById("seleccion");
 const lienzo = document.getElementById("lienzo");
 //Lienzo:
-const filas = 6;
-const columnas = 10;
+const filas = 60;
+const columnas = 50;
 //Paleta:
 let colores = ['#1f93f9', '#f91f1f', '#1ff926', '#f7f7f7', '#0a0909'];
 let coloresPaleta = [];
