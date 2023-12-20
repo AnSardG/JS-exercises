@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Firebase CRUD</title>
+    </head>
+
+    <body>
+        <h1>Gestión de tareas</h1>
+
+        <!-- Task Form -->
+
+        <form id="task-form">
+            <label for="title">Title:</label>
+            <input type="text" id="task-title" placeholder="Título" />
+
+            <label for="description">Description:</label>
+            <textarea
+                id="task-description"
+                rows="3"
+                placeholder="Descripción"
+            ></textarea>
+
+            <button id="btn-task-form">Guardar</button>
+        </form>
+        <!-- Tasks List -->
+        <div id="tasks-container"></div>
+
+        <!-- código externo -->
+        <script src="js/app.js" type="module"></script>
+    </body>
+</html>
