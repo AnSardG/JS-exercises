@@ -1,4 +1,4 @@
-import { saveTask, getTasks, onGetTasks } from './firebase.js';
+import { saveTask, getTasks, onGetTasks, deleteTask } from './firebase.js';
 
 const taskForm = document.getElementById("task-form");
 const tasksContainer = document.getElementById("tasks-container");
@@ -18,6 +18,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
     onGetTasks((querySnapshot) => {
         tasksContainer.innerHTML = "";
 
+        //Entendemos por "doc" a cada registro de la tabla
         querySnapshot.forEach(doc => {
             const task = doc.data();
     
@@ -26,7 +27,7 @@ window.addEventListener("DOMContentLoaded", async (e) => {
                 <h3>${task.title}</h3>
                 <p>${task.description}</p>
                     <div>
-                        <button class="btn-delete>
+                        <button class="btn-delete" data-id="${doc.id}">
                             Delete
                         </button>
                         <button>
@@ -36,8 +37,15 @@ window.addEventListener("DOMContentLoaded", async (e) => {
                 </div>
             `
         })    
-    })
+
+        //Logica borrado de registros
+        const btnsDelete = tasksContainer.querySelectorAll(".btn-delete");
     
-    
+        btnsDelete.forEach((btn) =>                 
+            btn.addEventListener("click", async (e) => {
+                await deleteTask(e.target.dataset.id);
+            })              
+        );
+    })    
     
 });
