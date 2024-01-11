@@ -4,23 +4,22 @@ document.addEventListener("DOMContentLoaded", function () {
     const botonesSiguiente = document.querySelectorAll(".btn-siguiente");
     const progressBar = document.querySelector(".progress-bar")
     const botonesAnterior = document.querySelectorAll(".btn-anterior");
-    let pasoActual = 1;
+    let pasoActual = 1;        
 
 
     function actualizarBarraDeProgreso() {
-        const progreso = ((pasoActual - 1) / (pasos.length - 1)) * 100;
-        console.log(progreso);
+        const progreso = ((pasoActual - 1) / (pasos.length - 1)) * 100;        
         progressBar.style = `width: ${progreso}%`
     }
 
     function siguientePaso() {
-        let camposRequired = document.querySelectorAll("required");
-        camposRequired = Array.prototype.slice.call(camposRequired);
+        let camposRequired = document.querySelectorAll(".required");
+        var noRequiredLeft = false;
 
-        let noRequiredLeft = false;
         i = 0;
-        while (!noRequiredLeft && i < camposRequired.length) {
-            noRequiredLeft = camposRequired[i].id == "required";
+        while (!noRequiredLeft && i < camposRequired.length) {                   
+            console.log(camposRequired[i].value);
+            noRequiredLeft = camposRequired[i].value != null;
             i++;
         }
 
@@ -46,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     botonesSiguiente.forEach((boton) => {
-        boton.addEventListener("click", siguientePaso);
+        boton.addEventListener("click", siguientePaso);   
     });
 
     botonesAnterior.forEach((boton) => {
