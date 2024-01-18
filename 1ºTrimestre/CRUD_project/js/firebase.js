@@ -6,12 +6,12 @@ import { getFirestore, collection, addDoc, getDocs, onSnapshot, deleteDoc, doc, 
 
 const firebaseConfig = {
     //ENTER YOUR CONFIG
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: ""
+    apiKey: "AIzaSyBn3ct3wmbxdzi2ojlBnv5F03rul8sDLro",
+    authDomain: "crud-js-5aaa3.firebaseapp.com",
+    projectId: "crud-js-5aaa3",
+    storageBucket: "crud-js-5aaa3.appspot.com",
+    messagingSenderId: "787309194109",
+    appId: "1:787309194109:web:d77269942dfc4496deba14"
 };
 
 // Initialize Firebase
