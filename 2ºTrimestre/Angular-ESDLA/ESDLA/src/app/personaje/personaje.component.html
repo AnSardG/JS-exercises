@@ -1,0 +1,19 @@
+
+<div class="personajes" *ngFor="let personaje of personajes">
+    <hr>    
+    <ul>
+        <li>ID: {{ personaje.id }}</li>
+        <li>Nombre: {{ personaje.nombre }}</li>
+        <li>Nivel: {{ personaje.nivel }}</li>
+    </ul>
+    <button (click)="onSelect(personaje)">Selecciona el personaje</button>
+</div>
+<br>
+<div *ngIf="personajeSel">
+    <h2>Personaje Seleccionado</h2>
+    <div>
+        <label>Nombre: 
+            <input class ="personajes badge" [(ngModel)]="personajeSel.nombre" placeholder="nombre">
+        </label>
+    </div>
+</div>
