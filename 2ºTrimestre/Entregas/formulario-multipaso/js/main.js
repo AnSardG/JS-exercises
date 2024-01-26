@@ -9,17 +9,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function actualizarBarraDeProgreso() {
         const progreso = ((pasoActual - 1) / (pasos.length - 1)) * 100;
-        console.log(progreso);
         progressBar.style = `width: ${progreso}%`
     }
+
     function siguientePaso() {
-        pasos[pasoActual - 1].style.display = "none";
-        pasoActual++;
-        if (pasoActual > pasos.length) {
-            pasoActual = pasos.length;
-        }
-        pasos[pasoActual - 1].style.display = "block";
-        actualizarBarraDeProgreso();
+        if(validarCampos()){
+            pasos[pasoActual - 1].style.display = "none";
+            pasoActual++;
+            if (pasoActual > pasos.length) {
+                pasoActual = pasos.length;
+            }
+            pasos[pasoActual - 1].style.display = "block";
+            actualizarBarraDeProgreso();
+        }        
     }
 
     function pasoAnterior() {
@@ -30,6 +32,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         pasos[pasoActual - 1].style.display = "block";
         actualizarBarraDeProgreso();
+    }
+
+    function validarCampos() {
+        const camposPasoActual = pasos[pasoActual - 1].querySelectorAll('input[type="text"]');
+    
+        for (const campo of camposPasoActual) {
+
+            if (campo.value.trim() === '') {
+                // Si algún campo está vacío, muestra un mensaje de error o realiza la lógica que desees.
+                alert('Todos los campos deben estar llenos.');
+                return false;
+            }
+        }
+        return true;
     }
 
     botonesSiguiente.forEach((boton) => {
