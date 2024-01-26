@@ -5,3 +5,8 @@
 .paso:first-child {
     display: block;
 }
+
+/* Estilos para campos no válidos */
+.campo-invalido {
+    border: 1px solid red !important; /* Borde rojo */
+}
