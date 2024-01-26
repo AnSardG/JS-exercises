@@ -12,6 +12,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const emailInput = document.getElementById("email");
     const movilInput = document.getElementById("phone");
     const salarioInput = document.getElementById("salario");
+    const radioInputs = document.querySelectorAll(".form-check-input");
 
     let pasoActual = 1;
     //Guardamos cuantos carácteres queremos como mínimo en los campos de tipo text de forma global.
@@ -35,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
             actualizarBarraDeProgreso();
         }       
         
-        console.log(pasoActual);
     }
 
     function pasoAnterior() {
@@ -168,6 +168,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 
                 validarCampo(salarioInput, validado);
             }
+            
+            let radioInputsEmpty = true;
+
+            radioInputs.forEach(input => {        
+                if(input.checked) {                    
+                    radioInputsEmpty = false; 
+                }                
+            });
+            
+            if(radioInputsEmpty) {
+                validado = false;
+            }
+            radioInputs.forEach(input => {
+                validarCampo(input, !radioInputsEmpty);
+            }) 
+            
+            if(validado){
+                finFormulario();
+            }
+            
         }                
 
         return validado;
@@ -187,6 +207,10 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             passwordRepeatInput.type = passwordRepeatInput.type === 'password' ? 'text' : 'password';
         }                
+    }
+
+    function finFormulario() {
+        alert("Enhorabuena!!");
     }
 
 
