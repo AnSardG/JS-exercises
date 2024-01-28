@@ -54,7 +54,7 @@
                             <div class="d-flex p-2 justify-content-between">
                                 <button class="btn btn-outline-primary btn-sm btn-anterior disabled">Anterior</button>
                                 <button class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
-                            </div>
+                            </div>                            
                         </div>
                         <div class="paso" data-paso="2">
                             <h2>Paso 2</h2>
@@ -94,31 +94,7 @@
                         </div>
                         <div class="paso" data-paso="3">
                             <h2>Paso 3</h2>
-                            <div class="input-group p-2">
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    name="email"
-                                    id="email"
-                                    placeholder="Email..."
-                                />
-                            </div>
-                            <div class="input-group p-2">
-                                <input
-                                    type="tel"
-                                    class="form-control"
-                                    name="phone"
-                                    id="phone"
-                                    placeholder="Móvil..."
-                                />
-                            </div>
-                            <div class="d-flex p-2 justify-content-between">
-                                <button class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
-                                <button class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
-                            </div>
-                        </div>
-                        <div class="paso" data-paso="4">
-                            <h2>Paso 4</h2>
+
                             <div class="input-group p-2">
                                 <input
                                     type="number"
@@ -169,8 +145,43 @@
                             
                             <div class="d-flex p-2 justify-content-between">
                                 <button class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
-                                <button class="btn btn-outline-success btn-sm btn-siguiente">Finalizar</button>
+                                <button class="btn btn-outline-primary btn-sm btn-siguiente">Siguiente</button>
                             </div>
+                        </div>
+                        <div class="paso" data-paso="4">
+                            <h2>Paso 4</h2>
+                            
+                            <div class="input-group p-2">
+                                <input
+                                    type="email"
+                                    class="form-control"
+                                    name="email"
+                                    id="email"
+                                    placeholder="Email..."
+                                />
+                            </div>
+                            <div class="input-group p-2">
+                                <input
+                                    type="tel"
+                                    class="form-control"
+                                    name="phone"
+                                    id="phone"
+                                    placeholder="Móvil..."
+                                />
+                            </div>
+                            
+                            <div class="d-flex p-2 justify-content-between">
+                                <button class="btn btn-outline-primary btn-sm btn-anterior">Anterior</button>
+                                <button type="submit" id="endButton" class="btn btn-outline-success btn-sm btn-siguiente">Finalizar</button>
+                            </div>
+
+                            <div class="popup" id="popup">
+                                <img src="./img/tick.png">
+                                <h2>¡Muchas gracias!</h2>
+                                <p>Se han enviado sus datos satisfactoriamente. ¡Gracias!</p>
+                                <button type="button" id="confirmButton" class="btn btn-outline-success">OK</button>
+                            </div> 
+                                                                                   
                         </div>
                     </form>
                     <div class="">

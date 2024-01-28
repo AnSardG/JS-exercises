@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const movilInput = document.getElementById("phone");
     const salarioInput = document.getElementById("salario");
     const radioInputs = document.querySelectorAll(".form-check-input");
+    const popup = document.getElementById("popup");
+    const endButton = document.getElementById("endButton");
+    const confirmButton = document.getElementById("confirmButton");
 
     let pasoActual = 1;
     //Guardamos cuantos carácteres queremos como mínimo en los campos de tipo text de forma global.
@@ -33,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 pasoActual = pasos.length;
             }
             pasos[pasoActual - 1].style.display = "block";
-            actualizarBarraDeProgreso();
+            actualizarBarraDeProgreso();            
         }       
         
     }
@@ -49,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function validarCampos() {
-        // Guardamos los campos de tipo texto del paso actual y inicializamos la variable validado como verdadera.        
+        // Guardamos los campos de tipo texto del paso actual y inicializamos la variable 'validado' como verdadera.        
         const camposPasoActual = pasos[pasoActual - 1].querySelectorAll('input[type="text"]');        
         let validado = true;
 
@@ -114,13 +117,42 @@ document.addEventListener("DOMContentLoaded", function () {
                 validarCampo(passwordRepeatInput, validado);
             } else if (!validado) {
                 validarCampo(passwordRepeatInput, !validado);
-            }
-
-            
+            }            
 
         }
 
         if (pasoActual == 3) {
+            if (salarioInput != null) {
+                if(salarioInput.value < 300) {
+                    validado = false;
+                } else {
+                    validado = true;
+                    salarioPresupuesto = salarioInput.value - 172;
+                    alert("Tras los gastos de comida al mes aproximados en España, su sueldo sería: " + salarioPresupuesto + "€.");
+                }
+                
+                validarCampo(salarioInput, validado);
+            }
+            
+            let radioInputsEmpty = true;
+
+            radioInputs.forEach(input => {        
+                if(input.checked) {                    
+                    radioInputsEmpty = false; 
+                }                
+            });
+            
+            if(radioInputsEmpty) {
+                validado = false;
+            }
+            radioInputs.forEach(input => {
+                validarCampo(input, !radioInputsEmpty);
+            }) 
+            
+        }
+        
+        if (pasoActual == 4) {
+            
             if (emailInput != null) {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(emailInput.value.trim())) {                
@@ -154,38 +186,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 
             }
-        }
-        
-        if (pasoActual == 4) {
-            if (salarioInput != null) {
-                if(salarioInput.value < 300) {
-                    validado = false;
-                } else {
-                    validado = true;
-                    salarioPresupuesto = salarioInput.value - 172;
-                    alert("Tras los gastos de comida al mes aproximados en España, su sueldo sería: " + salarioPresupuesto + "€.");
-                }
-                
-                validarCampo(salarioInput, validado);
-            }
             
-            let radioInputsEmpty = true;
-
-            radioInputs.forEach(input => {        
-                if(input.checked) {                    
-                    radioInputsEmpty = false; 
-                }                
-            });
-            
-            if(radioInputsEmpty) {
-                validado = false;
-            }
-            radioInputs.forEach(input => {
-                validarCampo(input, !radioInputsEmpty);
-            }) 
-            
-            if(validado){
-                finFormulario();
+            if(validado) {
+                openPopup();
             }
             
         }                
@@ -209,8 +212,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }                
     }
 
-    function finFormulario() {
-        alert("Enhorabuena!!");
+    function openPopup() {
+        popup.classList.add("open-popup");
+    }
+
+    function closePopup() {
+        popup.classList.remove("open-popup");
     }
 
 
@@ -226,8 +233,9 @@ document.addEventListener("DOMContentLoaded", function () {
         boton.addEventListener("click", pasoAnterior);
     });
 
-    formulario.addEventListener("submit", (e) => e.preventDefault());
-    
+    formulario.addEventListener("submit", (e) => e.preventDefault());        
+
+    confirmButton.addEventListener("click", closePopup);
 
     document.addEventListener("keydown", function (e) {
 
