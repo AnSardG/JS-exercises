@@ -16,7 +16,7 @@ const bola = {
     x: canvas.width / 2,
     y: canvas.height - 30,
     size: 10,
-    velocidad: 3,
+    velocidad: 4,
     dx: 4,
     dy: -4,
     visible: true,
@@ -150,8 +150,7 @@ function mueveBola() {
 
   // La paleta no golpea - Pierdes
   if (bola.y + bola.size > canvas.height) {
-    reiniciaMuro();
-    puntuacion = 0;
+    reiniciaMuro();    
   }
 }
 
@@ -183,6 +182,8 @@ function reiniciaMuro() {
   bloques.forEach(grupo => {
     grupo.forEach(bloque => (bloque.visible = true));
   });
+  ResetGame();
+ 
 }
 
 // Dibujar el canvas
@@ -194,6 +195,17 @@ function dibujaTodo() {
     dibujaPaleta();
     dibujaPuntuacion();
     dibujaMuro();
+}
+
+//Reiniciamos la partida moviendo la bola y la paleta al punto inicial.
+function ResetGame() {
+  puntuacion = 0;
+  gameStart = false;
+
+  bola.x = canvas.width / 2;
+  bola.y = canvas.height - 30;
+  paleta.x = canvas.width / 2 - 40;
+  paleta.y = canvas.height - 20;
 }
 
 // Actualiza el canvas y las posiciones de los objetos
