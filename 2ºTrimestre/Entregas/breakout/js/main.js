@@ -119,8 +119,10 @@ function mueveBola() {
   }
 
   // Colisión con paredes superior o inferior
-  if (bola.y + bola.size > canvas.height || bola.y - bola.size < 0) {
-    bola.dy *= -1;
+  if (bola.y - bola.size < 0) {
+    bola.dy = Math.abs(bola.dy); // Rebote hacia abajo
+  } else if (bola.y + bola.size > canvas.height) {
+    reiniciaMuro();
   }
 
   // Colisión con la paleta
@@ -168,12 +170,8 @@ function actualizaPuntuacion() {
 
       //After 0.5 sec restart the game
       setTimeout(function () {
-          showAllbloques();
+          ResetGame();
           puntuacion = 0;
-          paleta.x = canvas.width / 2 - 40;
-          paleta.y = canvas.height - 20;
-          bola.x = canvas.width / 2;
-          bola.y = canvas.height / 2;
           bola.visible = true;
           paleta.visible = true;
       }, delay)
@@ -209,6 +207,14 @@ function ResetGame() {
   bola.y = canvas.height - 30;
   paleta.x = canvas.width / 2 - 40;
   paleta.y = canvas.height - 20;
+
+  bloques.forEach(grupo => {
+    grupo.forEach(bloque => {
+      bloque.visible = true;
+    });
+  });
+
+  dibujaTodo();
 }
 
 // Actualiza el canvas y las posiciones de los objetos
