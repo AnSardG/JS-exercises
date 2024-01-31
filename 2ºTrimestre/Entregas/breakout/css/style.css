@@ -68,3 +68,19 @@ canvas {
 .reglas.mostrar {
     transform: translateX(0);
 }
+
+.pausa {
+    position: absolute;
+    background: #040404d9;
+    color: #fff;
+    text-align: center;
+    width: 400px;
+    padding: 20px;
+    line-height: 1.5;
+    transform: translateY(-800px);
+    transition: transform 0.3s ease-in-out;
+}
+
+.pausa.mostrar {
+    transform: translateY(0);    
+}

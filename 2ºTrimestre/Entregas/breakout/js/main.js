@@ -3,9 +3,12 @@ const btnCierra = document.getElementById("btn-cerrar");
 const reglas = document.getElementById("reglas");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
+const menuPausa = document.getElementById("pausa");
 
 let puntuacion = 0;
 let gameStart = false;
+let pausa = false;
+let teclaPausa = "p";
 
 const nColumnasBloques = 9;
 const nFilasBloques = 5;
@@ -213,12 +216,12 @@ function update() {
   // LLamada para dibujar el canvas
   dibujaTodo();
 
-  if (gameStart) {
+  if (gameStart && !pausa) {
     muevePaleta();
     mueveBola();        
   } 
   
-  requestAnimationFrame(update);   
+    requestAnimationFrame(update);     
 }
 
 update();
@@ -229,11 +232,24 @@ function keyDown(e) {
         paleta.dx = paleta.velocidad;
     } else if (e.key === "Left" || e.key === "ArrowLeft") {
         paleta.dx = -paleta.velocidad;
+    }    
+
+    if(e.key == teclaPausa){      
+      pausa = !pausa;      
+      mostrarPausa(pausa);
     }
 
     if(!gameStart) {
       gameStart = true;
     }
+}
+
+function mostrarPausa(pausa) {
+  if(pausa) {
+    menuPausa.classList.add('mostrar');
+  } else {
+    menuPausa.classList.remove('mostrar');
+  }
 }
 
 // Keyup event
