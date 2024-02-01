@@ -83,6 +83,7 @@ function dibujaPaleta() {
 // Dibuja la puntuación
 function dibujaPuntuacion() {
     ctx.font = "20px Arial";
+    ctx.fillStyle = "#0095dd";
     ctx.fillText(`Puntos: ${puntuacion}`, canvas.width - 100, 30);
 }
 
