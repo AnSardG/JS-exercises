@@ -84,3 +84,44 @@ canvas {
 .pausa.mostrar {
     transform: translateY(0);    
 }
+
+h3 {
+    text-align: center;
+}
+
+.paleta-colores {
+    display:flex;
+    align-content: space-evenly;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.color {
+    padding: 10px;
+    border: 1px solid #2a0f02 ;
+    border-radius: 35px;
+    margin: 0px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.color span{
+    margin: 5px;
+}
+
+.color span {
+    color:#000;
+    font-weight: 800;
+}
+
+.color input{
+    margin: 5px;
+}
+
+#bola-color-elegido {
+    border: 0;
+}

@@ -4,12 +4,14 @@ const reglas = document.getElementById("reglas");
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const menuPausa = document.getElementById("pausa");
+const bolaColorElegido = document.getElementById("bola-color-elegido");
+const paletaColorElegido = document.getElementById("paleta-color-elegido");
 
 let puntuacion = 0;
 let gameStart = false;
 let pausa = false;
 let teclaPausa = "p";
-let colores = ["#0095dd", "#00dd11", "#dd4700", "#cf00dd", "#dd0029"];
+let colores = ["#0095dd", "#00dd11", "#dd4700", "#dd0029"];
 
 const nColumnasBloques = 9;
 const nFilasBloques = 5;
@@ -23,6 +25,7 @@ const bola = {
     velocidad: 4,
     dx: 4,
     dy: -4,
+    color: "#0095dd",
     visible: true,
 };
 
@@ -34,6 +37,7 @@ const paleta = {
     h: 10,
     velocidad: 6,
     dx: 0,
+    color: "#0095dd",
     visible: true,
 };
 
@@ -62,7 +66,7 @@ for (let i = 0; i < nColumnasBloques; i++) {
 function dibujaBola() {
     ctx.beginPath();
     ctx.arc(bola.x, bola.y, bola.size, 0, Math.PI * 2);     
-    ctx.fillStyle = bola.visible ? "#0095dd" : "transparent";
+    ctx.fillStyle = bola.visible ? bola.color : "transparent";
     ctx.fill();
     ctx.closePath();
 }
@@ -71,7 +75,7 @@ function dibujaBola() {
 function dibujaPaleta() {
     ctx.beginPath();
     ctx.rect(paleta.x, paleta.y, paleta.w, paleta.h);
-    ctx.fillStyle = paleta.visible ? "#0095dd" : "transparent";
+    ctx.fillStyle = paleta.visible ? paleta.color : "transparent";
     ctx.fill();
     ctx.closePath();
 }
@@ -88,8 +92,7 @@ function dibujaMuro() {
         grupo.forEach((bloque) => {
             ctx.beginPath();
             ctx.rect(bloque.x, bloque.y, bloque.w, bloque.h);
-            ctx.fillStyle = bloque.visible ? bloque.color : "transparent";
-            console.log(bloque.color);
+            ctx.fillStyle = bloque.visible ? bloque.color : "transparent";            
             ctx.fill();
             ctx.closePath();
         });
@@ -262,8 +265,15 @@ function mostrarPausa(pausa) {
 
 function colorAleatorio() {
   const color = colores[Math.floor(Math.random() * colores.length)];
-    console.log("Color aleatorio:", color);
     return color;
+}
+
+function setColorBola() {
+  bola.color = bolaColorElegido.value;
+}
+
+function setColorPaleta() {
+  paleta.color = paletaColorElegido.value;
 }
 
 // Keyup event
@@ -280,3 +290,5 @@ document.addEventListener("keyup", keyUp);
 // Muestra reglas
 btnReglas.addEventListener('click', () => reglas.classList.add('mostrar'));
 btnCierra.addEventListener('click', () => reglas.classList.remove('mostrar'));
+bolaColorElegido.addEventListener("change", () => setColorBola());
+paletaColorElegido.addEventListener("change", () => setColorPaleta());
