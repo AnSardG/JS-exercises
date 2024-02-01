@@ -9,6 +9,7 @@ let puntuacion = 0;
 let gameStart = false;
 let pausa = false;
 let teclaPausa = "p";
+let colores = ["#0095dd", "#00dd11", "#dd4700", "#cf00dd", "#dd0029"];
 
 const nColumnasBloques = 9;
 const nFilasBloques = 5;
@@ -53,7 +54,7 @@ for (let i = 0; i < nColumnasBloques; i++) {
     for (let j = 0; j < nFilasBloques; j++) {
         const x = i * (iBloque.w + iBloque.padding) + iBloque.offsetX;
         const y = j * (iBloque.h + iBloque.padding) + iBloque.offsetY;
-        bloques[i][j] = { x, y, ...iBloque };
+        bloques[i][j] = { x, y, color: colorAleatorio(), ...iBloque };        
     }
 }
 
@@ -87,7 +88,8 @@ function dibujaMuro() {
         grupo.forEach((bloque) => {
             ctx.beginPath();
             ctx.rect(bloque.x, bloque.y, bloque.w, bloque.h);
-            ctx.fillStyle = bloque.visible ? "#0095dd" : "transparent";
+            ctx.fillStyle = bloque.visible ? bloque.color : "transparent";
+            console.log(bloque.color);
             ctx.fill();
             ctx.closePath();
         });
@@ -256,6 +258,12 @@ function mostrarPausa(pausa) {
   } else {
     menuPausa.classList.remove('mostrar');
   }
+}
+
+function colorAleatorio() {
+  const color = colores[Math.floor(Math.random() * colores.length)];
+    console.log("Color aleatorio:", color);
+    return color;
 }
 
 // Keyup event
