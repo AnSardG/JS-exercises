@@ -125,3 +125,40 @@ h3 {
 #bola-color-elegido {
     border: 0;
 }
+
+.popups {
+    position: absolute;
+    background: #050505c2;
+    color: #fff;
+    text-align: center;
+    width: 300px;
+    padding: 10px;
+    line-height: 1.5;
+    transform: translateY(-800px);
+    transition: transform 0.3s ease-in;
+    margin-bottom: 600px;
+}
+
+.popups.mostrar {
+    transform: translateX(0);
+}
+
+.increase-container {
+    display: none;
+    color: hsl(103, 78%, 49%);
+    font-size: 20px;
+}
+
+.decrease-container {
+    display: none;
+    color: hsl(184, 61%, 45%);
+    font-size: 13px;
+}
+
+.increase-container.mostrar {
+    display: inherit;
+}
+
+.decrease-container.mostrar {
+    display: inherit;    
+}

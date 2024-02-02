@@ -1,3 +1,4 @@
+//REFERENCIAS
 const btnReglas = document.getElementById("btn-reglas");
 const btnCierra = document.getElementById("btn-cerrar");
 const reglas = document.getElementById("reglas");
@@ -6,36 +7,57 @@ const ctx = canvas.getContext("2d");
 const menuPausa = document.getElementById("pausa");
 const bolaColorElegido = document.getElementById("bola-color-elegido");
 const paletaColorElegido = document.getElementById("paleta-color-elegido");
+const popups = document.getElementById("popups");
+const increasePopup = document.getElementById("increase-popup");
+const decreasePopup = document.getElementById("decrease-popup");
 
-let puntuacion = 0;
-let gameStart = false;
-let pausa = false;
-let teclaPausa = "p";
-let colores = ["#0095dd", "#00dd11", "#dd4700", "#dd0029"];
+//CONSTANTES
+const BOLA_VELOCIDAD = 4;
+const BOLA_DX = 4;
+const BOLA_DY = -4;
+const BOLA_X = canvas.width / 2;
+const BOLA_Y = canvas.height - 30;
+
+const PALETA_X = canvas.width / 2 - 40;
+const PALETA_Y = canvas.height - 20;
+const PALETA_W = 80;
+const PALETA_H = 10;
+const PALETA_VELOCIDAD = 6;
 
 const nColumnasBloques = 9;
 const nFilasBloques = 5;
 const delay = 1000; //delay para resetear el juego cuando pierdes
+const probabilidadPowerup = 15;
+const probabilidadSpeedup = 5;
+const teclaPausa = "p";
+
+
+//VARIABLES
+let puntuacion = 0;
+let gameStart = false;
+let pausa = false;
+let colores = ["#0095dd", "#00dd11", "#dd4700", "#dd0029"];
+
 
 // Objeto bola
 const bola = {
-    x: canvas.width / 2,
-    y: canvas.height - 30,
+    x: BOLA_X,
+    y: BOLA_Y,
     size: 10,
-    velocidad: 4,
-    dx: 4,
-    dy: -4,
+    velocidad: BOLA_VELOCIDAD,
+    dx: BOLA_DX,
+    dy: BOLA_DY,
     color: "#0095dd",
     visible: true,
 };
 
 // Objeto paleta
 const paleta = {
-    x: canvas.width / 2 - 40,
-    y: canvas.height - 20,
-    w: 80,
-    h: 10,
-    velocidad: 6,
+    x: PALETA_X,
+    y: PALETA_Y,
+    w: PALETA_W,
+    h: PALETA_H,
+    velocidad: PALETA_VELOCIDAD,
     dx: 0,
     color: "#0095dd",
     visible: true,
@@ -58,7 +80,7 @@ for (let i = 0; i < nColumnasBloques; i++) {
     for (let j = 0; j < nFilasBloques; j++) {
         const x = i * (iBloque.w + iBloque.padding) + iBloque.offsetX;
         const y = j * (iBloque.h + iBloque.padding) + iBloque.offsetY;
-        bloques[i][j] = { x, y, color: colorAleatorio(), ...iBloque };        
+        bloques[i][j] = { x, y, color: colorAleatorio(), powerup: setBloquePowerup(), speedup: setBloqueSpeedup(), ...iBloque };        
     }
 }
 
@@ -93,7 +115,7 @@ function dibujaMuro() {
         grupo.forEach((bloque) => {
             ctx.beginPath();
             ctx.rect(bloque.x, bloque.y, bloque.w, bloque.h);
-            ctx.fillStyle = bloque.visible ? bloque.color : "transparent";            
+            ctx.fillStyle = bloque.visible ? bloque.color : "transparent";               
             ctx.fill();
             ctx.closePath();
         });
@@ -150,10 +172,7 @@ function mueveBola() {
           bola.y + bola.size > bloque.y && // Chequeo de colisión por arriba
           bola.y - bola.size < bloque.y + bloque.h // Chequeo de colisión por abajo
         ) {
-          bola.dy *= -1; // rebota con 45º
-          bloque.visible = false; // el bloque desaparece
-
-          actualizaPuntuacion();
+          manejarColisionConBloque(bloque);
         }
       }
     });
@@ -209,10 +228,17 @@ function ResetGame() {
   puntuacion = 0;
   gameStart = false;
 
-  bola.x = canvas.width / 2;
-  bola.y = canvas.height - 30;
-  paleta.x = canvas.width / 2 - 40;
-  paleta.y = canvas.height - 20;
+  bola.x = BOLA_X;
+  bola.y = BOLA_Y;
+  bola.velocidad = BOLA_VELOCIDAD;
+  bola.dx = BOLA_DX;
+  bola.dy = BOLA_DY;
+
+  paleta.x = PALETA_X;
+  paleta.y = PALETA_Y;
+  paleta.w = PALETA_W;
+  paleta.h = PALETA_H;
+  paleta.velocidad = PALETA_VELOCIDAD;
 
   bloques.forEach(grupo => {
     grupo.forEach(bloque => {
@@ -248,7 +274,7 @@ function keyDown(e) {
 
     if(e.key == teclaPausa){      
       pausa = !pausa;      
-      mostrarPausa(pausa);
+      muestraMensaje("pausa");
     }
 
     if(!gameStart) {
@@ -256,17 +282,8 @@ function keyDown(e) {
     }
 }
 
-function mostrarPausa(pausa) {
-  if(pausa) {
-    menuPausa.classList.add('mostrar');
-  } else {
-    menuPausa.classList.remove('mostrar');
-  }
-}
-
 function colorAleatorio() {
-  const color = colores[Math.floor(Math.random() * colores.length)];
-    return color;
+  return colores[Math.floor(Math.random() * colores.length)];
 }
 
 function setColorBola() {
@@ -275,6 +292,100 @@ function setColorBola() {
 
 function setColorPaleta() {
   paleta.color = paletaColorElegido.value;
+}
+
+function setBloquePowerup() {
+  let powerup = 0;  
+  if(Math.floor(Math.random() * 100) < probabilidadPowerup) {        
+    do{
+      powerup = Math.floor(Math.random() * 3) - 1;
+    }while(powerup == 0);    
+  }
+  return powerup;
+}
+
+function setBloqueSpeedup() {
+  let speedup = false;
+  if(Math.floor(Math.random() * 100) < probabilidadSpeedup) {
+    speedup = true;
+  }
+  return speedup;
+}
+
+function manejarColisionConBloque(bloque) { 
+  bola.dy *= -1; // Rebota con 45º
+  bloque.visible = false; // El bloque desaparece
+
+  actualizaPuntuacion();
+
+  // Manejar el power-up del bloque
+  if(bloque.powerup > 0) {
+    ampliarPaleta();
+  } else if (bloque.powerup < 0) {
+    reducirPaleta();
+  }
+
+  if(bloque.speedup) {
+    bola.velocidad = BOLA_VELOCIDAD + 3;
+    bola.dx = BOLA_DX + 3;
+    bola.dy = BOLA_DY - 3;
+  }
+}
+
+function ampliarPaleta() {
+  if(paleta.w < PALETA_W + 40) {
+    paleta.w = PALETA_W + 40;    
+    paleta.h = PALETA_H + 10;
+    paleta.velocidad = PALETA_VELOCIDAD - 2;
+    paleta.y = PALETA_Y - 10;
+    paleta.x -=  20;
+
+    muestraMensaje("increase");
+  }
+}
+
+function reducirPaleta() {
+  if (paleta.w > PALETA_W - 20) {
+      paleta.w = PALETA_W - 20;      
+      paleta.h = PALETA_H - 2;
+      paleta.velocidad = PALETA_VELOCIDAD + 2;   
+      paleta.x += 10;
+      paleta.y = PALETA_Y - 5;         
+
+      muestraMensaje("decrease");      
+  }
+}
+
+function muestraMensaje(tipo) {
+  popups.classList.remove("mostrar");
+  decreasePopup.classList.remove("mostrar");
+  increasePopup.classList.remove("mostrar");
+
+  switch(tipo) {
+    case "increase":
+      popups.classList.add("mostrar");
+      increasePopup.classList.add("mostrar");
+      setTimeout(function () {
+        increasePopup.classList.remove("mostrar");
+        popups.classList.remove("mostrar");        
+      }, delay);
+      break;
+    case "decrease":
+      popups.classList.add("mostrar");
+      decreasePopup.classList.add("mostrar");
+      setTimeout(function () {
+        decreasePopup.classList.remove("mostrar");
+        popups.classList.remove("mostrar");        
+      }, delay);
+      break;
+    case "pausa":
+      if(pausa) {
+        menuPausa.classList.add('mostrar');
+      } else {
+        menuPausa.classList.remove('mostrar');
+      }
+      break;
+  }
 }
 
 // Keyup event
