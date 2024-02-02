@@ -31,13 +31,13 @@ const probabilidadPowerup = 15;
 const probabilidadSpeedup = 5;
 const teclaPausa = "p";
 
-
 //VARIABLES
 let puntuacion = 0;
 let gameStart = false;
 let pausa = false;
 let colores = ["#0095dd", "#00dd11", "#dd4700", "#dd0029"];
 
+//OBJETOS
 
 // Objeto bola
 const bola = {
@@ -357,9 +357,11 @@ function reducirPaleta() {
 }
 
 function muestraMensaje(tipo) {
-  popups.classList.remove("mostrar");
-  decreasePopup.classList.remove("mostrar");
-  increasePopup.classList.remove("mostrar");
+  if(!pausa){
+    popups.classList.remove("mostrar");
+    decreasePopup.classList.remove("mostrar");
+    increasePopup.classList.remove("mostrar");
+  }  
 
   switch(tipo) {
     case "increase":
