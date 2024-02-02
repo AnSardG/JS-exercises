@@ -32,9 +32,9 @@ const nColumnasBloques = 9;
 const nFilasBloques = 5;
 const delay = 1000; //delay para resetear el juego cuando pierdes
 const popupDelay = 3000;
-const speedPopupDelay = 3000;
-const probabilidadPowerup = 0;
-const probabilidadSpeedup = 15;
+const speedPopupDelay = 2000;
+const probabilidadPowerup = 15;
+const probabilidadSpeedup = 5;
 const teclaPausa = "p";
 const fpsDelay = 1000 / 60; // Objetivo de 60 fps
 
@@ -296,7 +296,7 @@ function update() {
   lastTime = currentTime;
 }
 
-// Iniciar el bucle de animación
+// Iniciar el bucle recursivo update
 requestAnimationFrame(update);
 
 function colorAleatorio() {
@@ -349,7 +349,7 @@ function manejarColisionConBloque(bloque) {
     }
 
     muestraMensaje("speed");
-
+    
     bola.dx = bola.dx < 0 ? bola.dx - 1 : bola.dx + 1;
     bola.dy = bola.dy < 0 ? bola.dy - 1 : bola.dy + 1;
     bola.velocidad = bola.velocidad + 1;
@@ -380,18 +380,13 @@ function reducirPaleta() {
     paleta.y = PALETA_Y - 5;
 
     if (paleta.estado > -1) {
-      muestraMensaje("increase");
+      muestraMensaje("decrease");
       paleta.estado = -1;
     }
   }
 }
 
 function muestraMensaje(tipo) {
-  if (!pausa) {
-    popups.classList.remove("mostrar");
-    decreasePopup.classList.remove("mostrar");
-    increasePopup.classList.remove("mostrar");
-  }
 
   switch (tipo) {
     case "increase":
