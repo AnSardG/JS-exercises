@@ -155,6 +155,34 @@ h3 {
     font-size: 13px;
 }
 
+.speed-container {
+    position: absolute;
+    background: #030c459f;
+    color: #fff;    
+    width: 220px;    
+    line-height: 1.5;
+    transform: translateY(-600px);
+    transition: transform 1.5s ease-out;
+    margin-bottom: -200px;
+    margin-left: -411px;
+    
+}
+
+.speed-container-child { 
+    display: none;
+    text-align: center;
+    color: rgb(253, 253, 28);
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.speed-container.mostrar{
+    transform: translateX(0);
+}
+
+.speed-container-child.mostrar{
+    display: inherit;
+}
+
 .increase-container.mostrar {
     display: inherit;
 }
