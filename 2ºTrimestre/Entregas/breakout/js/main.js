@@ -31,22 +31,23 @@ const PALETA_VELOCIDAD = 6;
 const nColumnasBloques = 9;
 const nFilasBloques = 5;
 const delay = 1000; //delay para resetear el juego cuando pierdes
-const popupDelay = 3000;
-const speedPopupDelay = 2000;
+const popupDelay = 3000; //Delay mensajes powerup
+const speedPopupDelay = 2000; //Delay mensajes speedup
 const probabilidadPowerup = 15;
-const probabilidadSpeedup = 5;
+const probabilidadSpeedup = 10;
 const teclaPausa = "p";
-const fpsDelay = 1000 / 60; // Objetivo de 60 fps
+const fpsDelay = 1000 / 60; // Objetivo de 60 fps para controlar llamadas a update()
+const probabilidadBloque = 40;
 
 //VARIABLES
 let puntuacion = 0;
 let gameStart = false;
 let pausa = false;
-let colores = ["#0095dd", "#00dd11", "#dd4700", "#dd0029"];
+let colores = ["#0095dd", "#00dd11", "#dd4700", "#dd0029"]; //Colores de los bloques.
 let speedVariableText = "SPEED x2!";
-let lastTime = null;
-let accumulatedTime = 0;
-let teclasPresionadas = {};
+let lastTime = null; //Para calcular delta time (tiempo entre fotogramas)
+let accumulatedTime = 0; //Tiempo que acumula delta time hasta llegar al objetivo de fotogramas.
+let teclasPresionadas = {}; //Control de eventos key.
 
 //OBJETOS
 
@@ -85,16 +86,29 @@ const iBloque = {
   visible: true,
 };
 
-// Crear conjunto de bloques
+//Crear patron de instanciación de bloques.
+const patronesBloques = [];
+for (let i = 0; i < nColumnasBloques; i++) {
+  patronesBloques[i] = [];
+  for (let j = 0; j < nFilasBloques; j++) {
+    patronesBloques[i][j] = Math.random() >= probabilidadBloque / 100 ? true : false;
+  }
+}
+
+// Crear conjunto de bloques siguiendo el patrón.
 const bloques = [];
 for (let i = 0; i < nColumnasBloques; i++) {
   bloques[i] = [];
   for (let j = 0; j < nFilasBloques; j++) {
-    const x = i * (iBloque.w + iBloque.padding) + iBloque.offsetX;
-    const y = j * (iBloque.h + iBloque.padding) + iBloque.offsetY;
-    bloques[i][j] = { x, y, color: colorAleatorio(), powerup: setBloquePowerup(), speedup: setBloqueSpeedup(), ...iBloque };
+    if (patronesBloques[i][j]) {
+      const x = i * (iBloque.w + iBloque.padding) + iBloque.offsetX;
+      const y = j * (iBloque.h + iBloque.padding) + iBloque.offsetY;
+      bloques[i][j] = { x, y, color: colorAleatorio(), powerup: setBloquePowerup(), speedup: setBloqueSpeedup(), ...iBloque };
+    }
   }
 }
+
+// FUNCIONES
 
 // Dibuja la bola
 function dibujaBola() {
@@ -138,7 +152,7 @@ function dibujaMuro() {
 function muevePaleta() {
   paleta.x += paleta.dx;
 
-  // Wall detection
+  // Detección de paredes
   if (paleta.x + paleta.w > canvas.width) {
     paleta.x = canvas.width - paleta.w;
   }
@@ -235,7 +249,7 @@ function dibujaTodo() {
   dibujaMuro();
 }
 
-//Reiniciamos la partida moviendo la bola y la paleta al punto inicial.
+//Reiniciamos la partida moviendo la bola y la paleta al punto inicial, .
 function ResetGame() {
   puntuacion = 0;
   gameStart = false;
@@ -258,7 +272,9 @@ function ResetGame() {
     });
   });
 
-  speedVariableText = "SPEED x1";
+  //Reiniciamos la variable que guarda el texto de la velocidad.
+
+  speedVariableText = "SPEED x2!";
 
   dibujaTodo();
 }
@@ -267,14 +283,17 @@ function ResetGame() {
 function update() {
   const currentTime = performance.now(); // Obtiene el tiempo actual con alta precisión
 
+  //Solo ocurrira en la primera llamada
   if (lastTime === null) {
     lastTime = currentTime;
   }
 
+  //Calculamos el tiempo entre el anterior fotograma y el actual, y lo acumulamos.
   const deltaTime = currentTime - lastTime;
   accumulatedTime += deltaTime;
 
-  // Hacer ajustes basados en el tiempo acumulado
+  // Realizamos la lógica del juego para cada fotograma una vez que 
+  // el tiepo llegue a los fps objetivos
   while (accumulatedTime > fpsDelay) {
     // Lógica del juego para cada fotograma
     if (gameStart && !pausa) {
@@ -282,7 +301,7 @@ function update() {
       mueveBola();
     }
 
-    // Actualiza el tiempo acumulado
+    // Actualiza el tiempo acumulado (lo reinicia)
     accumulatedTime -= fpsDelay;
   }
 
@@ -296,9 +315,6 @@ function update() {
   lastTime = currentTime;
 }
 
-// Iniciar el bucle recursivo update
-requestAnimationFrame(update);
-
 function colorAleatorio() {
   return colores[Math.floor(Math.random() * colores.length)];
 }
@@ -311,6 +327,7 @@ function setColorPaleta() {
   paleta.color = paletaColorElegido.value;
 }
 
+//Devuelve un powerup según la probabilidad establecida en el entorno, con la posibilidad de devolver 1 o -1.
 function setBloquePowerup() {
   let powerup = 0;
   if (Math.floor(Math.random() * 100) < probabilidadPowerup) {
@@ -321,6 +338,7 @@ function setBloquePowerup() {
   return powerup;
 }
 
+//Inserta un powerup de velocidad según la probabilidad establecida en el entorno.
 function setBloqueSpeedup() {
   let speedup = false;
   if (Math.floor(Math.random() * 100) < probabilidadSpeedup) {
@@ -329,6 +347,7 @@ function setBloqueSpeedup() {
   return speedup;
 }
 
+// Comprobamos el bloque con el que hemos colisionado para ver si tiene powerups.
 function manejarColisionConBloque(bloque) {
   bola.dy *= -1; // Rebota con 45º
   bloque.visible = false; // El bloque desaparece
@@ -342,6 +361,8 @@ function manejarColisionConBloque(bloque) {
     reducirPaleta();
   }
 
+  //En caso de que el bloque tenga el powerup de velocidad y aún no se haya alcanzado
+  //la velocidad máxima de la bola, aumentamos su velocidad.
   if (bloque.speedup && bola.velocidad < BOLA_MAX_SPEED) {
     speedVariableText = speedVariableText.slice(0, 6) + "x" + (bola.velocidad - 2);
     for (let index = 0; index < bola.velocidad - 2; index++) {
@@ -349,13 +370,16 @@ function manejarColisionConBloque(bloque) {
     }
 
     muestraMensaje("speed");
-    
+
+    //Modificamos la velocidad direccional.
     bola.dx = bola.dx < 0 ? bola.dx - 1 : bola.dx + 1;
     bola.dy = bola.dy < 0 ? bola.dy - 1 : bola.dy + 1;
     bola.velocidad = bola.velocidad + 1;
   }
 }
 
+//Cuando colisionamos con un bloque con powerup "1" ampliamos el tamaño de la paleta,
+// reducimos su velocidad y mostramos un mensaje al usuario.
 function ampliarPaleta() {
   if (paleta.w < PALETA_W + 40) {
     paleta.w = PALETA_W + 40;
@@ -371,6 +395,9 @@ function ampliarPaleta() {
   }
 }
 
+
+//Cuando colisionamos con un bloque con powerup "-1" reducimos el tamaño de la paleta,
+// aumentamos su velocidad y mostramos un mensaje al usuario.
 function reducirPaleta() {
   if (paleta.w > PALETA_W - 20) {
     paleta.w = PALETA_W - 20;
@@ -386,6 +413,9 @@ function reducirPaleta() {
   }
 }
 
+//Mostramos un mensaje diferente al usuario dependiendo del tipo de mensaje
+//pasado por parámetro: "pausa" (ha pulsado la "p"), "increase" (ha colisionado con un bloque powerup = 1), 
+//"decrease" (ha colisionado con un bloque powerup = -1), "speed" (ha colisionado con un bloque speedup = true).
 function muestraMensaje(tipo) {
 
   switch (tipo) {
@@ -426,6 +456,7 @@ function muestraMensaje(tipo) {
 // Keyup event
 function keyUp(e) {
   if (e.key === "Right" || e.key === "ArrowRight" || e.key === "Left" || e.key === "ArrowLeft") {
+    //Eliminamos la tecla presionada al soltarse.
     teclasPresionadas[e.key] = false;
 
     // Establecer paleta.dx según las teclas que estén actualmente presionadas
@@ -443,9 +474,11 @@ function keyUp(e) {
 function keyDown(e) {
   if (e.key === "Right" || e.key === "ArrowRight") {
     paleta.dx = paleta.velocidad;
+    //Registramos la flecha derecha
     teclasPresionadas[e.key] = true;
   } else if (e.key === "Left" || e.key === "ArrowLeft") {
     paleta.dx = -paleta.velocidad;
+    //Registramos la flecha izquierda
     teclasPresionadas[e.key] = true;
   }
 
@@ -459,6 +492,13 @@ function keyDown(e) {
   }
 }
 
+
+// Iniciar el bucle recursivo update
+requestAnimationFrame(update);
+
+
+// EVENTOS
+
 // Keyboard event handlers
 document.addEventListener("keydown", keyDown);
 document.addEventListener("keyup", keyUp);
@@ -466,5 +506,6 @@ document.addEventListener("keyup", keyUp);
 // Muestra reglas
 btnReglas.addEventListener('click', () => reglas.classList.add('mostrar'));
 btnCierra.addEventListener('click', () => reglas.classList.remove('mostrar'));
+// Escucha los inputs de color, en caso de que cambien modificará el color de la bola o la paleta.
 bolaColorElegido.addEventListener("change", () => setColorBola());
 paletaColorElegido.addEventListener("change", () => setColorPaleta());
