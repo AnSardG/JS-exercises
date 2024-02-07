@@ -41,6 +41,7 @@ const probabilidadBloque = 40;
 
 //VARIABLES
 let puntuacion = 0;
+let bloquesInstanciados = 0;
 let gameStart = false;
 let pausa = false;
 let colores = ["#0095dd", "#00dd11", "#dd4700", "#dd0029"]; //Colores de los bloques.
@@ -88,25 +89,12 @@ const iBloque = {
 
 //Crear patron de instanciación de bloques.
 const patronesBloques = [];
-for (let i = 0; i < nColumnasBloques; i++) {
-  patronesBloques[i] = [];
-  for (let j = 0; j < nFilasBloques; j++) {
-    patronesBloques[i][j] = Math.random() >= probabilidadBloque / 100 ? true : false;
-  }
-}
+crearPatronBloques();
 
 // Crear conjunto de bloques siguiendo el patrón.
 const bloques = [];
-for (let i = 0; i < nColumnasBloques; i++) {
-  bloques[i] = [];
-  for (let j = 0; j < nFilasBloques; j++) {
-    if (patronesBloques[i][j]) {
-      const x = i * (iBloque.w + iBloque.padding) + iBloque.offsetX;
-      const y = j * (iBloque.h + iBloque.padding) + iBloque.offsetY;
-      bloques[i][j] = { x, y, color: colorAleatorio(), powerup: setBloquePowerup(), speedup: setBloqueSpeedup(), ...iBloque };
-    }
-  }
-}
+crearConjuntoBloques();
+
 
 // FUNCIONES
 
@@ -142,6 +130,9 @@ function dibujaMuro() {
       ctx.beginPath();
       ctx.rect(bloque.x, bloque.y, bloque.w, bloque.h);
       ctx.fillStyle = bloque.visible ? bloque.color : "transparent";
+      if(bloque.speedup) {
+        ctx.fillStyle = bloque.visible ? variaColorSpeedup() : "transparent";
+      }
       ctx.fill();
       ctx.closePath();
     });
@@ -214,13 +205,15 @@ function mueveBola() {
 function actualizaPuntuacion() {
   puntuacion++;
 
-  if (puntuacion % (nFilasBloques * nColumnasBloques) === 0) {
+  if (puntuacion >= bloquesInstanciados) {
 
     bola.visible = false;
     paleta.visible = false;
 
     //After 0.5 sec restart the game
     setTimeout(function () {
+      crearPatronBloques();
+      crearConjuntoBloques();
       ResetGame();
       puntuacion = 0;
       bola.visible = true;
@@ -395,6 +388,24 @@ function ampliarPaleta() {
   }
 }
 
+function variaColorSpeedup() {
+  let tiempoTranscurrido = performance.now();
+  let periodoCambioColor = 2000; // Cambio de color cada 2 segundos
+  let t = (tiempoTranscurrido % periodoCambioColor) / periodoCambioColor; // Normalizamos el tiempo dentro del período
+
+  // Calculamos los componentes RGB interpolados en función de la función seno
+  let r = Math.round(255 * Math.sin(Math.PI * t));
+  let g = Math.round(215 * Math.sin(Math.PI * t));
+  let b = Math.round(0 * Math.sin(Math.PI * t));
+
+  // Convertimos los componentes RGB interpolados a formato hexadecimal
+  let componenteRHex = r.toString(16).padStart(2, '0');
+  let componenteGHex = g.toString(16).padStart(2, '0');
+  let componenteBHex = b.toString(16).padStart(2, '0');
+
+  // Formamos el color hexadecimal final
+  return `#${componenteRHex}${componenteGHex}${componenteBHex}`;
+}
 
 //Cuando colisionamos con un bloque con powerup "-1" reducimos el tamaño de la paleta,
 // aumentamos su velocidad y mostramos un mensaje al usuario.
@@ -409,6 +420,46 @@ function reducirPaleta() {
     if (paleta.estado > -1) {
       muestraMensaje("decrease");
       paleta.estado = -1;
+    }
+  }
+}
+
+function crearConjuntoBloques() {
+  for (let i = 0; i < nColumnasBloques; i++) {
+    bloques[i] = [];
+    for (let j = 0; j < nFilasBloques; j++) {
+      if (patronesBloques[i][j]) {
+        const x = i * (iBloque.w + iBloque.padding) + iBloque.offsetX;
+        const y = j * (iBloque.h + iBloque.padding) + iBloque.offsetY;
+        bloques[i][j] = { x, y, color: colorAleatorio(), powerup: setBloquePowerup(), speedup: setBloqueSpeedup(), ...iBloque };      
+        bloquesInstanciados++;
+      }
+    }
+  }
+}
+
+function crearPatronBloques() {
+  let num = Math.random();
+
+  for (let i = 0; i < nColumnasBloques; i++) {
+    patronesBloques[i] = [];
+    for(let j= 0; j < nFilasBloques; j++) {      
+      if(num > 0.8) {
+        patronesBloques[i][j] = (i + j) % 2 == 0;
+      } else if (num > 0.6) {
+        patronesBloques[i][j] = i % 2 == 0 || j % 2 == 0;
+      } else if (num > 0.4) {
+        patronesBloques[i][j] = (i + j + 1) % 3 != 0;
+      } else if (num > 0.2) {
+        patronesBloques[i][j] = Math.sin(i + j) < 0 || (i+j) % 2 == 0;
+      } else {
+        patronesBloques[i][j] = Math.abs(i - Math.floor(nColumnasBloques / 2)) 
+        + Math.abs(j - Math.floor(nFilasBloques / 2)) 
+        > Math.min(Math.floor(nColumnasBloques / 2), Math.floor(nFilasBloques / 2));
+        if(i + 1 == nColumnasBloques && j + 2 == nFilasBloques){
+          patronesBloques[Math.floor(nColumnasBloques / 2)][Math.floor(nFilasBloques / 2)] = true;
+        }        
+      }
     }
   }
 }
