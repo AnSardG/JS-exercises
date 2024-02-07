@@ -70,20 +70,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     //Esta forma de validar la veremos en todos los inputs que vayamos validando, se llama
                     //a la funcion validarCampo con el campo actual y si ha pasado la validación o no.
-                    validarCampo(campo, validado);
+                    validarCampo(campo, validado, 'Por favor, introduzca un nombre válido (mínimo 2 carácteres).');
                     break;  
-
-                default:
+                case "usuario":
                     if (campo.value.trim().length < longitudInput) {                                        
                         validado = false;
-                        validarCampo(campo, validado);
+                        validarCampo(campo, validado, `Por favor, introduzca un usuario válido (mínimo ${longitudInput} carácteres).`);
                     } else if(!validado) {
                         //En este caso, para que se valide solamente este campo necesitamos comprobar
                         //el valor de la variable validado, ya que si la igualamos a verdadero
                         //entrará al siguiente paso aunque los campos anteriores a este no estuviesen validados.
                         validarCampo(campo, !validado);
                     }
-
+                    break;
+                case "apellidos":                    
+                    if (campo.value.trim().length < longitudInput) {                                        
+                        validado = false;
+                        validarCampo(campo, validado, `Por favor, introduzca un usuario válido (mínimo ${longitudInput} carácteres).`);
+                    } else if(!validado) {                        
+                        validarCampo(campo, !validado);
+                    }
                     break;
             }
             
@@ -93,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if(pasoActual == 1) {
             if(generoInput.value == '') {
                 validado = false                
-                validarCampo(generoInput, validado);
+                validarCampo(generoInput, validado, 'Por favor, seleccione un género.');
             } else if (!validado) {
                 validarCampo(generoInput, !validado);
             }
@@ -104,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if(passwordInput.value.trim().length < longitudInput) {
                 validado = false;
-                validarCampo(passwordInput, validado);
+                validarCampo(passwordInput, validado, `Por favor, introduzca una contraseña válida (mínimo ${longitudInput} cáracteres).`);
             } else if(!validado){
                 validarCampo(passwordInput, !validado);
             }
@@ -114,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if(passwordRepeatInput.value.trim().length < longitudInput 
             || passwordRepeatInput.value != passwordInput.value) {
                 validado = false;
-                validarCampo(passwordRepeatInput, validado);
+                validarCampo(passwordRepeatInput, validado, 'Las contraseñas no coinciden.');
             } else if (!validado) {
                 validarCampo(passwordRepeatInput, !validado);
             }            
@@ -131,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert("Tras los gastos de comida al mes aproximados en España, su sueldo sería: " + salarioPresupuesto + "€.");
                 }
                 
-                validarCampo(salarioInput, validado);
+                validarCampo(salarioInput, validado, 'Por favor, introduzca un salario mayor de 300€.');
             }
             
             let radioInputsEmpty = true;
@@ -161,7 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     validado = true;
                 }
     
-                validarCampo(emailInput, validado);
+                validarCampo(emailInput, validado, 'Por favor, introduzca un formato de correo válido.');
             }
         
             if (movilInput != null) {
@@ -180,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const movilRegex = /^(?:(?:\+|00)34)?[6-9]\d{8}$/;
                 if (!movilRegex.test(movilInput.value.trim())) {
                     validado = false;
-                    validarCampo(movilInput, validado);
+                    validarCampo(movilInput, validado, 'Por favor, introduzca un número de teléfono español.');
                 } else if (!validado) {
                     validarCampo(movilInput, !validado);
                 }
@@ -196,11 +202,19 @@ document.addEventListener("DOMContentLoaded", function () {
         return validado;
     }
 
-    function validarCampo(campo, valido){
-        if(valido){
-            campo.classList.remove('campo-invalido')
+    function validarCampo(campo, valido, mensajeError){
+        const campoError = document.getElementById(`${campo.id}-error`);
+
+        if(valido) {
+            campo.classList.remove('campo-invalido');
         } else {
-            campo.classList.add('campo-invalido')
+            campo.classList.add('campo-invalido');            
+        }
+
+        if(campo.type != 'radio' && valido) {
+            campoError.innerText = '';
+        } else if(campo.type != 'radio'){
+            campoError.innerText = mensajeError;
         }
     }
 
@@ -218,6 +232,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function closePopup() {
         popup.classList.remove("open-popup");
+
+        // Recargamos la página después de medio segundo tras finalizar el formulario.
+        setTimeout(function() {
+            location.reload();
+        }, 500);
     }
 
 

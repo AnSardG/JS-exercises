@@ -65,3 +65,10 @@
     cursor: pointer;
     box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
 }
+
+.campo-error {
+    display: block;
+    font-size: 14px;
+    color: red;
+    margin-top: 5px;
+}
