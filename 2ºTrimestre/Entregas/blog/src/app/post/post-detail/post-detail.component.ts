@@ -12,12 +12,15 @@ import { CommonModule } from '@angular/common';
   styleUrl: './post-detail.component.css'
 })
 export class PostDetailComponent implements OnInit{
-  post!: Post;
+  post: Post | undefined;
 
   constructor(private route: ActivatedRoute, private postService: PostService) { }
 
   ngOnInit(): void {
-    const postId = +!this.route.snapshot.paramMap.get('id');
+    let postId = Number(this.route!.snapshot.paramMap.get('id'));
+    if(postId == null) {
+      postId = 0;
+    }
     this.postService.find(postId).subscribe((post: Post) => {
       this.post = post;
     });

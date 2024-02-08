@@ -8,5 +8,7 @@ export const routes: Routes = [
     { path: 'posts', component: PostListComponent }, 
     { path: 'posts/:id', component: PostDetailComponent },
     { path: 'create', component: PostCreateComponent },
-    { path: 'update/:id', component: PostUpdateComponent } 
+    { path: 'update/:id', component: PostUpdateComponent },
+    { path: '', redirectTo: '/posts', pathMatch: 'full' }, // Redirigir a '/posts' por defecto
+//   { path: '**', component: PageNotFoundComponent } // Manejo de rutas no encontradas
 ];

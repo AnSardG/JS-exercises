@@ -13,6 +13,7 @@
         <td>
           <a routerLink="/posts/{{ post.id }}">View</a> |
           <a routerLink="/update/{{ post.id }}">Edit</a> |
+          <a routerLink="/create">Create</a> |
           <button class="btn-danger" (click)="deletePost(post.id)">Delete</button>
         </td>
       </tr>

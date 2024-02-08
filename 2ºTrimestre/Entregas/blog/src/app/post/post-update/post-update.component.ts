@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class PostUpdateComponent implements OnInit{
   postId!: number;
-  postForm: FormGroup;
+  postForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,11 +28,9 @@ export class PostUpdateComponent implements OnInit{
   }
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      if(params) {
-        this.postId = +!params.get('id');
-        this.loadPostData();
-      }      
+    this.route.paramMap.subscribe(params => {      
+      this.postId = +params.get('id')!;
+      this.loadPostData();  
     });
   }
 

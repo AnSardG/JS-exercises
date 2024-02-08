@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './post-create.component.css'
 })
 export class PostCreateComponent {
-  postForm: FormGroup;
+  postForm!: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,

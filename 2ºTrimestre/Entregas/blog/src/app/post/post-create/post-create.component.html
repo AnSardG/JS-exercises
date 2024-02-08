@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="postForm">
     <h2>Create New Post</h2>
     <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
@@ -16,6 +16,6 @@
         </div>
         </div>
         <button type="submit" [disabled]="postForm.invalid" class="btn btn-primary">Create Post</button>
-    </form>
+    </form>    
 </div>
   
