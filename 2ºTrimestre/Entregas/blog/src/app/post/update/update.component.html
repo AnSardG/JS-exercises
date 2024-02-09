@@ -1,0 +1,37 @@
+<div class="container">
+    <h1>ACTUALIZAR POST</h1>
+   
+    <a href="#" routerLink="/post/index" class="btn btn-primary">Atrás</a>
+          
+    <form [formGroup]="form" (ngSubmit)="submit()">
+    
+        <div class="form-group">
+            <label for="title">Título:</label>
+            <input 
+                formControlName="title"
+                id="title" 
+                type="text" 
+                [(ngModel)]="post.title"
+                class="form-control">
+            <div *ngIf="controls['title'].touched && controls['title'].invalid" class="alert alert-danger">
+                <div *ngIf="controls['title'].errors && controls['title'].errors['required']">Introduzca un título.</div>
+            </div>
+        </div>
+           
+        <div class="form-group">
+            <label for="body">Descripción</label>
+            <textarea 
+                formControlName="body"
+                id="body" 
+                type="text" 
+                [(ngModel)]="post.body"
+                class="form-control">
+            </textarea>
+            <div *ngIf="controls['body'].touched && controls['body'].invalid" class="alert alert-danger">
+                <div *ngIf="controls['body'].errors && controls['body'].errors['required']">Introduzca una descripción.</div>
+            </div>
+        </div>
+         
+        <button class="btn btn-primary" type="submit" [disabled]="!form.valid">Actualizar</button>
+    </form>
+</div>

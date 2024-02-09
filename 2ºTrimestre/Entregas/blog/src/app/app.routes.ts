@@ -1,14 +1,13 @@
 import { Routes } from '@angular/router';
-import { PostListComponent } from './post/post-list/post-list.component';
-import { PostDetailComponent } from './post/post-detail/post-detail.component';
-import { PostCreateComponent } from './post/post-create/post-create.component';
-import { PostUpdateComponent } from './post/post-update/post-update.component';
+import { ListComponent } from './post/list/list.component';
+import { DetailComponent } from './post/detail/detail.component';
+import { CreateComponent } from './post/create/create.component';
+import { UpdateComponent } from './post/update/update.component';
 
 export const routes: Routes = [
-    { path: 'posts', component: PostListComponent }, 
-    { path: 'posts/:id', component: PostDetailComponent },
-    { path: 'create', component: PostCreateComponent },
-    { path: 'update/:id', component: PostUpdateComponent },
-    { path: '', redirectTo: '/posts', pathMatch: 'full' }, // Redirigir a '/posts' por defecto
-//   { path: '**', component: PageNotFoundComponent } // Manejo de rutas no encontradas
+    { path: 'post', redirectTo: 'post/list', pathMatch: 'full' },
+    { path: 'post/list', component: ListComponent },
+    { path: 'post/:postId/detail', component: DetailComponent },
+    { path: 'post/create', component: CreateComponent },
+    { path: 'post/:postId/update', component: UpdateComponent}
 ];
