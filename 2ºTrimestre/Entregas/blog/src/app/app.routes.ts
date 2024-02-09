@@ -6,6 +6,7 @@ import { UpdateComponent } from './post/update/update.component';
 
 export const routes: Routes = [
     { path: 'post', redirectTo: 'post/list', pathMatch: 'full' },
+    { path: '', redirectTo: 'post/list', pathMatch: 'full'},
     { path: 'post/list', component: ListComponent },
     { path: 'post/:postId/detail', component: DetailComponent },
     { path: 'post/create', component: CreateComponent },
