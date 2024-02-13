@@ -5,6 +5,7 @@ import { HomePageComponent } from './shared/pages/home-page/home-page.component'
 import { AboutPageComponent } from './shared/pages/about-page/about-page.component';
 import { ContactPageComponent } from './shared/pages/contact-page/contact-page.component';
 import { SidebarComponent } from './shared/component/sidebar/sidebar.component';
+import { HttpClientModule } from '@angular/common/http';
 
 export const routes: Routes = [
     { path:'', redirectTo: '/home', pathMatch: 'full' },
@@ -16,7 +17,7 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes), SidebarComponent],
+  imports: [RouterModule.forRoot(routes), SidebarComponent, HttpClientModule],
   exports: [RouterModule]
 })
 export class RoutesModule { }

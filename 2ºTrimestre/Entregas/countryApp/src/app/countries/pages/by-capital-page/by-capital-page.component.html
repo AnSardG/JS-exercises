@@ -1,6 +1,12 @@
-<app-search-box (search)="onSearchUpdate($event)"></app-search-box>
+<div class="container">
+  <h1>Países por capital</h1>
 
-<h1>Países por capital</h1>
+  <app-search-box (search)="onSearchUpdate($event)"></app-search-box>
 
-<ul class="list-unstyled">
+  <ul class="list-unstyled">
+    <li *ngFor="let country of countries">
+      <app-country-table [countries]="countries"></app-country-table>
+    </li>
   </ul>
+
+</div>
