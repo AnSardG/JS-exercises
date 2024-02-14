@@ -28,7 +28,6 @@ export class CountryPageComponent implements OnInit{
           this.router.navigateByUrl('');
         } else {
           this.country = country;
-          console.log(this.country);
         }
       });
   }

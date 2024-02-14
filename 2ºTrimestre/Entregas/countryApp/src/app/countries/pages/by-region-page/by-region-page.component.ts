@@ -14,8 +14,7 @@ import { CommonModule } from '@angular/common';
 export class ByRegionPageComponent {
   regions: string[] = ['Europe', 'Africa', 'Asia', 'Americas', 'Oceania'];
   activeRegion: string = '';
-  countries: Country[] = [];
-
+  countries: Country[] = [];  
   
   constructor( private countryService: CountryService ) { }
 

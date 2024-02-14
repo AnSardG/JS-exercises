@@ -17,6 +17,7 @@ export class ByCountryPageComponent {
   searchValue : string = '';
   exception: boolean = false;
   countries  : Country[] = [];
+  placeholder : string = 'Busca algún país...';
  
 
   constructor( private countryService: CountryService ) { }

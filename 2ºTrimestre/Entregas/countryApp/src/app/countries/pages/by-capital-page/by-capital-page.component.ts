@@ -18,6 +18,7 @@ export class ByCapitalPageComponent{
   countries: Country[] = []
   searchValue: string = '';
   exception : boolean = false;
+  placeholder : string = 'Busca la capital de algún país...';
 
   constructor(private countryService: CountryService) { }
 

@@ -1,0 +1,13 @@
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: block;
+    margin-top: 200px; /* Ajuste este valor según el margen que deseas */
+  }
+  
+  @media (max-height: 500px) {
+    footer {
+      position: static;
+    }
+  }
