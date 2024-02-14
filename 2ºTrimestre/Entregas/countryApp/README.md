@@ -1,27 +1,46 @@
-# CountryApp
+# Documentación de Países del Mundo con Angular 17
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.1.2.
+Este documento proporciona una descripción detallada del proyecto Países del Mundo, que consiste en el desarrollo de una Single Page Application (SPA) utilizando Angular. El objetivo principal es mostrar información sobre los diferentes países del mundo, incluyendo páginas de inicio, acerca de y contacto, así como la posibilidad de buscar países por diferentes criterios.
 
-## Development server
+### Estructura del Proyecto
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+El proyecto se organiza de la siguiente manera:
 
-## Code scaffolding
+1. **Carpetas Principales:**
+   - `countries`: Contiene componentes, interfaces, páginas y servicios relacionados con la funcionalidad de búsqueda y visualización de países.
+   - `shared`: Contiene componentes compartidos entre diferentes partes de la aplicación, como la barra lateral, el cuadro de búsqueda y el footer.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+2. **Componentes:**
+   - `Sidebar`: Componente que muestra un menú con enlaces a las diferentes páginas de la aplicación.
+   - `SearchBox`: Componente de búsqueda genérico que permite a los usuarios introducir un término de búsqueda.
 
-## Build
+3. **Páginas:**
+   - `HomePage`, `AboutPage`, `ContactPage`: Páginas principales de la aplicación que muestran contenido estático y enlaces a otras partes del sitio.
+   - `ByCapitalPage`, `ByCountryPage`, `ByRegionPage`, `CountryPage`: Páginas específicas que muestran resultados de búsqueda de países según diferentes criterios.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+4. **Servicios:**
+   - `CountryService`: Servicio encargado de interactuar con la API-Rest para obtener información sobre países.
 
-## Running unit tests
+5. **Rutas:**
+   - `routes.module.ts`: Configura las rutas principales de la aplicación, incluyendo las páginas de inicio, acerca de y contacto.
+   - `country.routes.ts`: Configura las rutas específicas relacionadas con la búsqueda y visualización de países.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### Funcionalidades Implementadas
 
-## Running end-to-end tests
+1. **Enrutamiento:** Se configuran las rutas principales de la aplicación para mostrar las páginas de inicio, acerca de y contacto. Además, se implementan rutas específicas para la búsqueda y visualización de países.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+2. **Barra Lateral:** Se crea un componente de barra lateral que proporciona enlaces a las páginas principales de la aplicación.
 
-## Further help
+3. **Búsqueda de Países:** Se desarrolla un componente de búsqueda genérico que permite a los usuarios introducir un término de búsqueda. Se implementa la funcionalidad de búsqueda por capital, país o región utilizando una API-Rest.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+4. **Visualización de Resultados:** Se crea un componente de tabla (`CountryTable`) para mostrar los resultados de búsqueda de una manera visualmente atractiva.
+
+5. **Vista Detallada:** Se implementa una vista detallada de la información de cada país, que se activa al hacer clic en el enlace "Ver más" en la tabla de resultados.
+
+6. **Manejo de Errores:** Se añade manejo de errores en caso de que no se obtengan resultados de la API-Rest durante la búsqueda de países.
+
+### Mejoras Potenciales
+
+- Refactorización de código para mejorar la legibilidad y mantenibilidad.
+- Desarrollo de contenido adicional para las páginas de inicio, acerca de y contacto.
+- Implementación de un formulario de contacto funcional en la página de contacto.
