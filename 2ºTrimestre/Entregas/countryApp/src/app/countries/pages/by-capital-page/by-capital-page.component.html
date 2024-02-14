@@ -1,7 +1,7 @@
 <div class="container">
   <h1>Países por capital</h1>
 
-  <app-search-box (search)="onSearchUpdate($event)"></app-search-box>
+  <app-search-box (onEnter)="onSearch($event)"></app-search-box>
 
   <ul class="list-unstyled">
     <li *ngFor="let country of countries">

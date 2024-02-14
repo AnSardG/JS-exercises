@@ -4,6 +4,8 @@ import { ByCapitalPageComponent } from './pages/by-capital-page/by-capital-page.
 import { ByCountryPageComponent } from './pages/by-country-page/by-country-page.component';
 import { ByRegionPageComponent } from './pages/by-region-page/by-region-page.component';
 import { CountryPageComponent } from './pages/country-page/country-page.component';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -15,7 +17,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [RouterModule.forChild(routes), CommonModule, FormsModule],
   exports: [RouterModule]
 })
 export class CountriesRoutingModule { }

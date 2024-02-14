@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Subject, debounceTime } from 'rxjs';
 
 
 @Component({
@@ -11,17 +12,29 @@ import { FormsModule } from '@angular/forms';
 })
 export class SearchBoxComponent implements OnInit{
 
-  @Output() search = new EventEmitter<string>();
+  @Output() onEnter   : EventEmitter<string> = new EventEmitter();
+  @Output() onDebounce: EventEmitter<string> = new EventEmitter();
 
-  searchValue: string = '';
+  @Input() placeholder: string = '';
 
-  constructor() { }
+  debouncer: Subject<string> = new Subject();
 
-  ngOnInit(): void {    
+  termino: string = '';
+
+  ngOnInit() {
+    this.debouncer
+      .pipe(debounceTime(300))
+      .subscribe( valor => {
+        this.onDebounce.emit( valor );
+      });
   }
 
-  onKeyUp(): void {
-    this.search.emit(this.searchValue);
+  buscar() {
+    this.onEnter.emit( this.termino );
+  }
+
+  teclaPresionada() {
+    this.debouncer.next( this.termino );
   }
 
 }

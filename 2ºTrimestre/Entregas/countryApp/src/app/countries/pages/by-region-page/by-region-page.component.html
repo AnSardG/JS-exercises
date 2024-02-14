@@ -1,1 +1,15 @@
-<p>by-region-page works!</p>
+<h3>Buscar por región {{ activeRegion }} </h3>
+
+<h4>Seleccione una región</h4>
+
+<div class="row">
+    <div class="col">
+        <button *ngFor="let region of regions" (click)="activateRegion( region )"> {{ region }} </button>
+    </div>
+</div>
+
+<div *ngIf="countries.length > 0" class="row">
+    <div class="col">
+        <app-country-table [countries]="countries"></app-country-table>
+    </div>
+</div>
