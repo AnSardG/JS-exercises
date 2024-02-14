@@ -15,6 +15,7 @@ export interface Country {
   ccn3: string;
   cca3: string;
   cioc: string;
+  numericCode: string;
   independent: boolean;
   status: string;
   unMember: boolean;
@@ -40,7 +41,43 @@ export interface Country {
       official: string;
       common: string;
     };
-    // Otros idiomas
+    bre: {
+      official: string;
+      common: string;
+    };
+    ces: {
+      official: string;
+      common: string;
+    };
+    cym: {
+      official: string;
+      common: string;
+    };
+    deu: {
+      official: string;
+      common: string;
+    };
+    est: {
+      official: string;
+      common: string;
+    };
+    fin: {
+      official: string;
+      common: string;
+    };
+    ita: {
+      official: string;
+      common: string;
+    };
+    kor: {
+      official: string;
+      common: string;
+    };
+    per: {
+      official: string;
+      common: string;
+    };
+
   };
   latlng: number[];
   landlocked: boolean;

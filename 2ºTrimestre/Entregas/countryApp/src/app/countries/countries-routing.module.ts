@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'by-capital', component: ByCapitalPageComponent },
   { path: 'by-country', component: ByCountryPageComponent },
   { path: 'by-region', component: ByRegionPageComponent },
-  { path: 'country', component: CountryPageComponent }
+  { path: 'country/:code', component: CountryPageComponent }
 ];
 
 @NgModule({

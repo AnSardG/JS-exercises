@@ -36,6 +36,14 @@ export class CountryService {
       );
   }
 
+  searchCountryByAlphaCode( code: string ):Observable<Country>{
+    const url = `${ this.baseUrl }/alpha/${ code }`;
+    return this.http.get<Country>( url )
+    .pipe(
+      catchError(this.handleError)
+    );
+  }
+
   private handleError(error: HttpErrorResponse): Observable<never> {
     let errorMessage = 'Error desconocido.';
     if (error.error instanceof ErrorEvent) {

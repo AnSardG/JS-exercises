@@ -20,7 +20,7 @@
     </thead>
     <tbody>
       <tr *ngFor="let country of countries; let i = index">
-        <td><a href="#">Ver más...</a></td>
+        <td><a [routerLink]="['/countries/country', country.cca3]">Ver más...</a></td>
         <td><img [src]="country.flags.png" alt="{{ country.name.common }}"></td>
         <td><img [src]="country.flags.svg" alt="{{ country.name.common }}"></td>
         <td>{{ country.name.common }}</td>
