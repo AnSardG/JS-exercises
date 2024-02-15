@@ -1,0 +1,9 @@
+.btn-equal {
+    height: 60px; /* Altura deseada */
+    width: 100%; /* Ancho completo */
+}
+
+.align-center {
+    display: flex;
+    align-items: center;
+}
