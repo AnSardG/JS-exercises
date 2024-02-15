@@ -1,10 +1,14 @@
-footer {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    display: block;
-    margin-top: 200px; /* Ajuste este valor según el margen que deseas */
-  }
+.footer {
+  position: sticky;
+  bottom: 0;
+  width: 100%;
+  height: 60px; /* Altura del footer */
+  background-color: #333; /* Color de fondo del footer */
+  color: #fff; /* Color del texto del footer */
+  text-align: center;
+  line-height: 60px; /* Ajusta verticalmente el texto del footer */
+  margin-top: 200px;
+}
   
   @media (max-height: 500px) {
     footer {
