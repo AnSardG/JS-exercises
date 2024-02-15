@@ -10,7 +10,11 @@ import { CountryTableComponent } from '../../components/country-table/country-ta
   standalone: true,
   imports: [SearchBoxComponent, CommonModule, CountryTableComponent],
   templateUrl: './by-capital-page.component.html',
-  styles: ``
+  styles: `
+  .container {
+    margin-bottom: 40%;
+  }
+`
 })
 
 export class ByCapitalPageComponent{

@@ -9,7 +9,11 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CountryTableComponent, CommonModule],
   templateUrl: './by-region-page.component.html',
-  styles: ``
+  styles: `
+  .container {
+    margin-bottom: 40%;
+  }
+  `
 })
 export class ByRegionPageComponent {
   regions: string[] = ['Europe', 'Africa', 'Asia', 'Americas', 'Oceania'];

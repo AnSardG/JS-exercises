@@ -11,7 +11,11 @@ import { SearchBoxComponent } from '../../../shared/component/search-box/search-
   standalone: true,
   imports: [CommonModule, CountryTableComponent, RouterLink, SearchBoxComponent],
   templateUrl: './by-country-page.component.html',
-  styles: ``
+  styles: `
+  .container {
+    margin-bottom: 41%;
+  }
+  `
 })
 export class ByCountryPageComponent {
   searchValue : string = '';

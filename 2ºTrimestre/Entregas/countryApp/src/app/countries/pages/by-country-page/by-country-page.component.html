@@ -1,24 +1,26 @@
-<h2>Por País</h2>
+<div class="container">
+    <h2>Por País</h2>
 
-<div class="row">
-    <div class="col">
-        <app-search-box
-            (onEnter)="search( $event )"
-            [placeholder]="placeholder">
-        </app-search-box>
+    <div class="row">
+        <div class="col">
+            <app-search-box
+                (onEnter)="search( $event )"
+                [placeholder]="placeholder">
+            </app-search-box>
+        </div>
     </div>
-</div>
-
-<div *ngIf="exception" 
-     class="alert alert-danger">
-    No se encontró nada con el término {{ searchValue }}
-</div>
-
-<div *ngIf="countries.length > 0" class="row">
-    <div class="col">
-
-        <app-country-table [countries]="countries"></app-country-table>
-
-
+    
+    <div *ngIf="exception" 
+         class="alert alert-danger">
+        No se encontró nada con el término {{ searchValue }}
+    </div>
+    
+    <div *ngIf="countries.length > 0" class="row">
+        <div class="col">
+    
+            <app-country-table [countries]="countries"></app-country-table>
+    
+    
+        </div>
     </div>
 </div>
