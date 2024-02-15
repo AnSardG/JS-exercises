@@ -16,18 +16,21 @@
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Formulario de contacto</h3>
-                    <form>
+                    <form (submit)="onSubmit()">
                         <div class="form-group">
                             <label for="nombre">Nombre:</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre">
+                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre"
+                                [(ngModel)]="nombre" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="form-group">
                             <label for="email">Correo electrónico:</label>
-                            <input type="email" class="form-control" id="email" placeholder="Ingrese su correo electrónico">
+                            <input type="email" class="form-control" id="email"
+                                placeholder="Ingrese su correo electrónico" [(ngModel)]="email" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="form-group">
                             <label for="mensaje">Mensaje:</label>
-                            <textarea class="form-control" id="mensaje" rows="5" placeholder="Escriba su mensaje"></textarea>
+                            <textarea class="form-control" id="mensaje" rows="5" placeholder="Escriba su mensaje"
+                                [(ngModel)]="mensaje" [ngModelOptions]="{standalone: true}"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary">Enviar mensaje</button>
                     </form>
